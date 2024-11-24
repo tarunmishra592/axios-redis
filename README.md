@@ -11,7 +11,7 @@
 - Clear Entire Cache: Reset all Redis cache entries.
 - Fine-Grained Control: Override global configurations for individual requests.
 
-# 📦 Installation
+## 📦 Installation
 **Install the plugin via npm:**
 
 
@@ -85,7 +85,7 @@ await apiClient.redis.flushall();
 
 
 
-## 🛠 ** API Reference**
+## 🛠 API Reference
 - **Constructor**: `AxiosRedis(baseConfig, options)`
  - **baseConfig**: Axios configuration object (e.g., `baseURL`, headers).
 
@@ -173,7 +173,7 @@ To remove data from Redis, use the deleteData method. This will delete the key a
     await axiosRedis.deleteData("userSession:12345");
 
 
-## 🌟 **  Why Use Axios Redis Enhanced?**
+## 🌟 Why Use Axios Redis Enhanced?
 - **Optimized API Usage**: Save bandwidth and reduce API load with response caching.
 - **Error Resilience**: Retry failed requests automatically for better reliability.
 - **Scalable**: Works seamlessly with distributed systems using Redis as a shared cache.
