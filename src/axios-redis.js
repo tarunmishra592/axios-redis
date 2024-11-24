@@ -10,6 +10,34 @@ class AxiosRedis {
   }
 
   /**
+   * Store custom data in Redis
+   * @param {string} key - The Redis key
+   * @param {any} value - The value to store
+   * @param {number} ttl - Time-to-live in seconds (optional)
+   */
+  async setData(key, value, ttl = this.cacheTTL) {
+    await this.redis.setex(key, ttl, JSON.stringify(value));
+  }
+
+  /**
+   * Retrieve custom data from Redis
+   * @param {string} key - The Redis key
+   * @returns {any} - Parsed value or null if not found
+   */
+  async getData(key) {
+    const result = await this.redis.get(key);
+    return result ? JSON.parse(result) : null;
+  }
+
+  /**
+   * Delete custom data from Redis
+   * @param {string} key - The Redis key
+   */
+  async deleteData(key) {
+    await this.redis.del(key);
+  }
+
+  /**
    * Perform a GET request with Redis caching
    * @param {string} url - Request URL
    * @param {object} config - Axios request configuration

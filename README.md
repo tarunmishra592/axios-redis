@@ -119,6 +119,59 @@ await apiClient.redis.flushall();
 
  - Direct access to the underlying Redis client for advanced operations.
 
+### Using Redis Store with AxiosRedis
+**1. Setting Up AxiosRedis with Redis**
+To use Redis for data storage, you first need to initialize AxiosRedis with your Redis configuration. The following example demonstrates how to configure and use the Redis store for storing and retrieving custom data.
+
+
+
+    // Import AxiosRedis
+    import AxiosRedis from "axios-redis";
+    
+    // Initialize AxiosRedis with Axios config and Redis options
+    const axiosRedis = new AxiosRedis(
+      { baseURL: "https://api.example.com" }, // Axios config (optional)
+      { redisConfig: { host: "localhost", port: 6379 }, cacheTTL: 300 } // Redis config
+    );
+	
+
+**2. Storing Data in Redis**
+You can store custom data in Redis using the setData method. Here’s an example of how to store an object with a 5-minute TTL:
+
+
+
+
+    // Store custom data with a 5-minute TTL
+    await axiosRedis.setData("userSession:12345", { username: "john_doe", cart: [] }, 300);
+
+- `key:` The unique identifier for your data.
+- `value:` The data you want to store, usually serialized as a JSON string.
+- `ttl:` Time-to-live in seconds (optional, defaults to 300 seconds).
+
+**3. Retrieving Data from Redis**
+To retrieve stored data, you can use the getData method. It returns null if the data doesn't exist or has expired.
+
+
+
+
+    // Retrieve the stored data
+    const userSession = await axiosRedis.getData("userSession:12345");
+    
+    if (userSession) {
+      console.log(userSession.username); // "john_doe"
+    } else {
+      console.log("Session expired or data not found.");
+    }
+
+**4. Deleting Data from Redis**
+To remove data from Redis, use the deleteData method. This will delete the key and its associated value from the store.
+
+
+
+
+    // Delete data from Redis
+    await axiosRedis.deleteData("userSession:12345");
+
 
 ## 🌟 **  Why Use Axios Redis Enhanced?**
 - **Optimized API Usage**: Save bandwidth and reduce API load with response caching.

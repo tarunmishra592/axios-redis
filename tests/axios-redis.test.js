@@ -150,3 +150,43 @@ describe('AxiosRedis', () => {
   });
 });
 
+describe("AxiosRedis - Custom Data Methods", () => {
+  let redisMock;
+  let axiosRedis;
+
+  beforeEach(() => {
+    redisMock = new Redis(); // Mock Redis instance
+    redisMock.setex = jest.fn();
+    redisMock.get = jest.fn();
+    redisMock.del = jest.fn();
+    axiosRedis = new AxiosRedis({}, { redisConfig: {}, cacheTTL: 300 });
+    axiosRedis.redis = redisMock; // Replace Redis with mock
+  });
+
+  it("should store custom data in Redis", async () => {
+    await axiosRedis.setData("testKey", { foo: "bar" }, 120);
+
+    expect(redisMock.setex).toHaveBeenCalledWith(
+      "testKey",
+      120,
+      JSON.stringify({ foo: "bar" })
+    );
+  });
+
+  it("should retrieve custom data from Redis", async () => {
+    redisMock.get.mockResolvedValue(JSON.stringify({ foo: "bar" }));
+
+    const result = await axiosRedis.getData("testKey");
+
+    expect(redisMock.get).toHaveBeenCalledWith("testKey");
+    expect(result).toEqual({ foo: "bar" });
+  });
+
+  it("should delete custom data from Redis", async () => {
+    await axiosRedis.deleteData("testKey");
+
+    expect(redisMock.del).toHaveBeenCalledWith("testKey");
+  });
+});
+
+
