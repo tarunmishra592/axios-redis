@@ -2,14 +2,14 @@
 ###### Core Functionalities
 - **Redis Caching:** Cache GET request responses to reduce redundant API calls and improve performance.
 - **Configurable TTL:** Control how long responses are cached (default: 5 minutes).
-- Retry Logic: Automatically retries failed requests (configurable number of attempts).
+- **Retry Logic:** Automatically retries failed requests (configurable number of attempts).
 - **Distributed Caching:** Share cached data across systems in distributed environments.
 - **Cache Control:** Enable or disable caching for specific requests.
 
 ###### Utility Features
-- Cache Invalidation: Manually remove specific cached keys.
-- Clear Entire Cache: Reset all Redis cache entries.
-- Fine-Grained Control: Override global configurations for individual requests.
+- **Cache Invalidation:** Manually remove specific cached keys.
+- **Clear Entire Cache:** Reset all Redis cache entries.
+- **Fine-Grained Control:** Override global configurations for individual requests.
 
 ## 📦 Installation
 **Install the plugin via npm:**
